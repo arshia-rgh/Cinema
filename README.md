@@ -1,2 +1,6 @@
 ## Cinema Ticket
-[ERD 01]: (https://drive.google.com/drive/folders/1YTau1qWbVuXEjkyyJNDEvnzjZMZAPMC5?usp=drive_link)
+
+This is a project for Quera bootcamp course in which a reservation system is based on CLI.
+For more information about the design of this system, we suggest you check the following ERD:
+
+![erd.png](assets/erd.png)
