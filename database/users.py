@@ -1,5 +1,6 @@
-from database.base import Base
 import sqlalchemy as db
+
+from database.base import Base
 
 
 class Users(Base):
@@ -10,5 +11,4 @@ class Users(Base):
     password = db.Column(db.String, nullable=False)
     email = db.Column(db.String, unique=True, nullable=False)
     phone = db.Column(db.String)
-    last_login = db.Column(db.DateTime(timezone=True))
-
+    last_login = db.Column(db.DateTime(timezone=True), nullable=False)
