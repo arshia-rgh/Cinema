@@ -1,7 +1,7 @@
 # import User and Manager classes
 
 class Cinema:
-    def __init__(self, name, manager: Manager, rate):
+    def __init__(self, name, manager: Manager, rate = None):
         self.name = name
         self.rate = rate
         self.manager = manager
