@@ -1,5 +1,6 @@
 import sqlalchemy as db
 from sqlalchemy.orm import relationship
+
 from database.base import Base
 
 
@@ -14,3 +15,4 @@ class User(Base):
     last_login = db.Column(db.DateTime(timezone=True), nullable=True, default=None)
 
     manager = relationship('Manager', back_populates='user', uselist=False)
+    customer = relationship('Customer', back_populates='user', uselist=False)
