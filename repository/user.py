@@ -1,11 +1,12 @@
+from datetime import datetime
+
 from sqlalchemy.orm import Session
 
 from database.user import User
-from repository.base import BaseRepository
 from schema.user import UserInDB, UserOutput
 
 
-class UserRepository(BaseRepository):
+class UserRepository:
 
     def __init__(self, db: Session) -> None:
         self.db = db
@@ -17,6 +18,20 @@ class UserRepository(BaseRepository):
 
     def get_by_id(self, id: int) -> UserOutput | None:
         user_db = self.db.query(User).filter(User.id == id).first()
+        if user_db:
+            user = UserOutput(**user_db.__dict__)
+            return user
+        return None
+
+    def get_by_username(self, username: str) -> UserOutput | None:
+        user_db = self.db.query(User).filter(User.username == username).first()
+        if user_db:
+            user = UserOutput(**user_db.__dict__)
+            return user
+        return None
+
+    def get_by_email(self, email: str) -> UserOutput | None:
+        user_db = self.db.query(User).filter(User.email == email).first()
         if user_db:
             user = UserOutput(**user_db.__dict__)
             return user
@@ -58,3 +73,8 @@ class UserRepository(BaseRepository):
             self.db.commit()
             return True
         return False
+
+    def set_last_login_now(self, id: int):
+        user_db = self.db.query(User).get(id)
+        user_db.update(last_login=datetime.now())
+        self.db.commit()
