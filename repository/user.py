@@ -2,6 +2,7 @@ from datetime import datetime
 
 from sqlalchemy.orm import Session
 
+from database.base import session
 from database.user import User
 from schema.user import UserInDB, UserOutput
 
@@ -78,3 +79,6 @@ class UserRepository:
         user_db = self.db.query(User).get(id)
         user_db.update(last_login=datetime.now())
         self.db.commit()
+
+
+user_repository = UserRepository(session)

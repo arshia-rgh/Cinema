@@ -1,4 +1,4 @@
-from repository.user import UserRepository
+from repository.user import UserRepository, user_repository
 from schema.user import UserInDB
 from utils.password_hash import get_password_hash, verify_password
 
@@ -32,3 +32,6 @@ class AuthService:
             self.user_repository.set_last_login_now(user.id)
             return True
         return False
+
+
+auth_service = AuthService(user_repository)
