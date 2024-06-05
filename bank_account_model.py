@@ -31,10 +31,11 @@ class Transaction:
        self.transaction_date = transaction_date
 
 
+# this class should be used as a type for Subscription's type attribute
 class SubscriptionEnum(Enum):
-    bronze = 1
-    silver = 2
-    gold = 3
+    BRONZE = 1
+    SILVER = 2
+    GOLD = 3
 
 
 class Subscription:
