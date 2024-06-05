@@ -74,10 +74,3 @@ class LowAccountBalanceError(CinemaTicketError):
     def __init__(self, value, message):
         self.value = value
         self.message = message 
-
-
-class LowAccountBalanceError(CinemaTicketError):
-    '''raised when user's bank account's balance is low'''
-    def __init__(self, value, message):
-        self.value = value
-        self.message = message 
