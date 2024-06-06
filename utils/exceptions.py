@@ -74,3 +74,11 @@ class LowAccountBalanceError(CinemaTicketError):
     def __init__(self, value, message):
         self.value = value
         self.message = message 
+
+class InvalidRateValueError(CinemaTicketError):
+    """
+        raised when rate value is not between 0 and 5
+    """
+    def __init__(self, value, message):
+        self.value = value
+        self.message = message 

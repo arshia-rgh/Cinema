@@ -47,10 +47,10 @@ class UserRepository:
             user = UserOutput(**user_db.__dict__)
             return user
         except Exception as e:
-            # TODO raise appropriate exception, Duplicate Email or username
+            # TODO: raise appropriate exception, Duplicate Email or username
             pass
 
-    def update(self, item: UserInDB) -> UserOutput:
+    def update(self, item: UserOutput) -> UserOutput:
         user_db = self.db.query(User).filter(User.id == item.id).first()
         if user_db:
             try:
@@ -60,11 +60,11 @@ class UserRepository:
                 user = UserOutput(**user_db.__dict__)
                 return user
             except Exception as e:
-                # TODO raise appropriate exception, Duplicate Email or username
+                # TODO: raise appropriate exception, Duplicate Email or username
                 pass
 
         else:
-            # TODO raise appropriate exception, Not found user
+            # TODO: raise appropriate exception, Not found user
             pass
 
     def delete(self, id: int) -> bool:
