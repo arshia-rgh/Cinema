@@ -35,12 +35,12 @@ class UserRepository(BaseRepository):
             return user
         return None
 
-    def create(self, item: Type[User]) -> Type[User]:
+    def create(self, item: User) -> User:
         try:
             self.db.add(item)
             self.db.commit()
             self.db.refresh(item)
-            return item
+            return user
         except Exception as e:
             self.db.rollback()
             # TODO raise appropriate exception, Duplicate Email or username
