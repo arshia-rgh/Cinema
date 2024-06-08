@@ -1,5 +1,5 @@
+from database import User
 from repository.user import UserRepository, user_repository
-from schema.user import UserInDB
 from utils.password_hash import get_password_hash, verify_password
 
 
@@ -8,14 +8,14 @@ class AuthService:
     def __init__(self, user_repository: UserRepository):
         self.user_repository = user_repository
 
-    def register(self, username: str, email: str, password: str, phone: str | None):
-        user = UserInDB(
+    def register(self, username: str, email: str, password: str, phone: str | None = None) -> User:
+        user = User(
             username=username,
             email=email,
-            password=get_password_hash(password),
-            phone=phone,
-            last_login=None
+            password=get_password_hash(password)
         )
+        if phone:
+            user.phone = phone
         registered_user = self.user_repository.create(user)
         return registered_user
 
