@@ -1,54 +1,48 @@
 from sqlalchemy.orm import Session
+from typing import Type
 
 from database.base import session
-from database.bank_account import BankAccount
-from schema.bank_account import BankAccountInDB, BankAccountOutput
+from database.models.bank_account import BankAccount
+from repository.base import BaseRepository
 
 
-class BankAccountRepository:
+class BankAccountRepository(BaseRepository):
     def __init__(self, db: Session) -> None:
         self.db = db
 
-    def get_all(self) -> list[BankAccountOutput] | None:
-        bank_accounts_db = self.db.query(BankAccount).all()
-        bank_accounts = [BankAccountOutput(**account.__dict__) for account in bank_accounts_db]
+    def get_all(self) -> list[Type[BankAccount]] | None:
+        bank_accounts = self.db.query(BankAccount).all()
         return bank_accounts
 
-    def get_by_id(self, id: int) -> BankAccountOutput | None:
-        bank_account_db = self.db.query(BankAccount).filter(BankAccount.id == id).first()
-        if bank_account_db:
-            bank_account = BankAccountOutput(**bank_account_db.__dict__)
+    def get_by_id(self, id: int) -> Type[BankAccount] | None:
+        bank_account = self.db.query(BankAccount).filter(BankAccount.id == id).first()
+        if bank_account:
             return bank_account
         return None
 
-    def get_by_customer_id(self, user_id: int) -> list[BankAccountOutput] | None:
-        bank_accounts_db = self.db.query(BankAccount).filter(BankAccount.customer_id == user_id).all()
-        bank_accounts = [BankAccountOutput(**account.__dict__) for account in bank_accounts_db]
+    def get_by_customer_id(self, customer_id: int) -> list[Type[BankAccount]] | None:
+        bank_accounts = self.db.query(BankAccount).filter(BankAccount.customer_id == customer_id).all()
         return bank_accounts
 
-    def create(self, item: BankAccountInDB) -> BankAccountOutput:  # should handle exceptions later
-        bank_account_db = BankAccount(**item.__dict__)
-        self.db.add(bank_account_db)
+    def create(self, item: BankAccount) -> BankAccount:  # TODO should handle exceptions later
+        self.db.add(item)
         self.db.commit()
-        self.db.refresh(bank_account_db)
-        bank_account = BankAccountOutput(**bank_account_db.__dict__)
-        return bank_account
+        self.db.refresh(item)
+        return item
 
-    def update(self, item: BankAccountInDB) -> BankAccountOutput:  # should handle exceptions later
-        bank_account_db = self.db.query(BankAccount).filter(BankAccount.id == item.id).first()
-        if bank_account_db:
-            for key, value in item.__dict__.items():
-                setattr(bank_account_db, key, value)
+    def update(self, item: Type[BankAccount]) -> Type[BankAccount]:  # TODO should handle exceptions later
+        bank_account = self.db.query(BankAccount).filter(BankAccount.id == item.id).first()
+        if bank_account:
+            bank_account = item
             self.db.commit()
-            self.db.refresh(bank_account_db)
-            bank_account = BankAccountOutput(**bank_account_db.__dict__)
+            self.db.refresh(bank_account)
             return bank_account
         return None
 
     def delete(self, id: int) -> bool:
-        bank_account_db = self.db.query(BankAccount).filter(BankAccount.id == id).first()
-        if bank_account_db:
-            self.db.delete(bank_account_db)
+        bank_account = self.db.query(BankAccount).filter(BankAccount.id == id).first()
+        if bank_account:
+            self.db.delete(bank_account)
             self.db.commit()
             return True
         return False
