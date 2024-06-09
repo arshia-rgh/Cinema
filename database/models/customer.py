@@ -1,0 +1,15 @@
+import sqlalchemy as db
+from sqlalchemy.orm import relationship
+
+from database.base import Base
+
+
+class Customer(Base):
+    __tablename__ = 'customers'
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    birth_date = db.Column(db.Date)
+    registration_date = db.Column(db.DateTime, default=db.func.now())
+
+    user = relationship('User', back_populates='customer')
