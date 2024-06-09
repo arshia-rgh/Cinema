@@ -11,3 +11,4 @@ class Manager(Base):
     user_id = db.Column(db.ForeignKey('users.id'), unique=True)
 
     user = relationship('User', back_populates='manager')
+    cinema = relationship('Cinema', back_populates='manager')
