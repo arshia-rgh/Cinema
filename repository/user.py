@@ -3,7 +3,7 @@ from datetime import datetime
 from sqlalchemy.orm import Session
 
 from database.base import session
-from database.user import User
+from database.models.user import User
 from schema.user import UserInDB, UserOutput
 
 

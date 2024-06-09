@@ -1,9 +1,6 @@
-from datetime import datetime
-
 from sqlalchemy.orm import Session
 
-from database.base import session
-from database.sans import Sans
+from database.models.sans import Sans
 from schema.sans import Sans as SSans
 
 

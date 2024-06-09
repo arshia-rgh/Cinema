@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 
 from database.base import session
-from database.sans_seat import SansSeat
+from database.models.sans_seat import SansSeat
 from schema.sans_seat import SansSeat as scheam_sans_seats
 
 
