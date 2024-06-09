@@ -1,55 +1,59 @@
+from typing import Type
+
 from sqlalchemy.orm import Session
 
+from database.base import session
 from database.models.sans import Sans
-from schema.sans import Sans as SSans
+from repository.base import BaseRepository
 
 
-class SansRepository:
+class SansRepository(BaseRepository):
 
     def __init__(self, db: Session) -> None:
         self.db = db
 
-    def get_all(self) -> list[SSans]:
-        sans_db = self.db.query(Sans).all()
-        sanses = [SSans(**sans.__dict__) for sans in sans_db]
+    def get_all(self) -> list[Type[Sans]]:
+        sanses: list[Type[Sans]] = self.db.query(Sans).all()
         return sanses
-    
-    def get_by_id(self, id:int) -> SSans:
-        sans_db = self.db.query(Sans).filter(Sans.id == id).first()
-        if sans_db:
-            sans = SSans(**sans_db.__dict__)
+
+    def get_by_id(self, id: int) -> Type[Sans]:
+        sans = self.db.query(Sans).filter(Sans.id == id).first()
+        if sans:
             return sans
         return None
-    
-    def create(self, item:SSans) -> SSans:
-        sans_db = Sans(**item.__dict__)
+
+    def create(self, item: Sans) -> Sans:
         try:
-            self.db.add(sans_db)
+            sans = item
+            self.db.add(item)
             self.db.commit()
-            self.db.refresh(sans_db)
-            sans = SSans(**sans_db.__dict__)
+            self.db.refresh(item)
             return sans
         except Exception as e:
+            self.db.rollback()
             pass
 
-    def update(self, item:SSans) -> SSans:
-        sans_db = self.db.query(Sans).filter(Sans.id == item.id).first()
-        if sans_db:
+    def update(self, item: Type[Sans]) -> Type[Sans]:
+        sans = self.db.query(Sans).filter(Sans.id == item.id).first()
+        if sans:
             try:
-                sans_db.update(**item.__dict__)
+                sans = item
                 self.db.commit()
-                self.db.refresh(sans_db)
-                sans = SSans(**sans_db.__dict__)
+                self.db.refresh(sans)
                 return sans
             except Exception as e:
+                self.db.rollback()
                 pass
         else:
             pass
 
     def delete(self, id: int) -> bool:
-        sans_db = self.db.query(Sans).filter(Sans.id == id).first()
-        if sans_db:
-            sans_db.delete()
+        sans = self.db.query(Sans).filter(Sans.id == id).first()
+        if sans:
+            self.db.delete(sans)
             self.db.commit()
             return True
         return False
+
+
+sans_repository = SansRepository(session)
