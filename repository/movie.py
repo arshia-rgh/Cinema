@@ -1,7 +1,7 @@
 from typing import Type
 
 from sqlalchemy.orm import Session
-
+from sqlalchemy import desc
 from database.base import session
 from database.models.movie import Movie
 from repository.base import BaseRepository
@@ -13,6 +13,7 @@ class MovieRepository(BaseRepository):
         - get_all
         - get_by_id
         - get_by_name
+        - get_top_rated
         - create
         - update
         - delete
@@ -32,10 +33,14 @@ class MovieRepository(BaseRepository):
         return None
 
     def get_by_name(self, name: str) -> Type[Movie] | None:
-        movie = self.db.query(Movie).filter(Movie.name.like(name)).all()        if movie:
+        movie = self.db.query(Movie).filter(Movie.name.like(name)).all()
         if movie:
             return movie
         return None
+    
+    def get_top_rated(self, nums: int) -> list[Type[Movie]] | None:
+        movies : list[Type[Movie]] =self.db.query(Movie).all().order_by(desc(Movie.rate))
+        return movies[0:nums]
 
     def create(self, item: Movie) -> Movie:
         try:
@@ -44,6 +49,7 @@ class MovieRepository(BaseRepository):
             self.db.refresh(item)
             return item
         except Exception as e :
+            self.db.rollback()
             # TODO: handle exceptions for rate and name values
             pass
 
@@ -56,6 +62,7 @@ class MovieRepository(BaseRepository):
                 self.db.refresh(movie)
                 return movie
             except Exception as e:
+                self.db.rollback()
                 # TODO: handle exceptions for rate and name values
                 pass
 

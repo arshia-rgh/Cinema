@@ -33,7 +33,7 @@ class CinemaRepository(BaseRepository):
         return None
 
     def get_by_name(self, name: str) -> Type[Cinema] | None:
-        cinema = self.db.query(Cinema).filter(Cinema.name == name).first()
+        cinema = self.db.query(Cinema).filter(Cinema.name.like(name)).all()
         if cinema:
             return cinema
         return None

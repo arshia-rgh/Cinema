@@ -23,10 +23,10 @@ class Cinema(Base):
 
     id = Column("id", Integer, primary_key=True, autoincrement=True)
     manager_id =("manager_id", Integer, ForeignKey("managers.id"))
-    name = Column("name", String(length=50), nullable=False, unique=True)
-    rate = Column("rate", SmallInteger, CheckConstraint('rate >= 0 AND rate <=5'), default=None)
+    name = Column("name", String(length=50), nullable=False)
+    rate = Column("rate", SmallInteger, default=None)
 
-    manager = relationship("Manager", back_populates="cinema")
+    manager = relationship("Manager", back_populates="cinemas")
 
     def __repr__(self): 
         return f"<Cinema(name='{self.name}', manager='{self.manager_id}', rate='{self.rate}'>"

@@ -20,9 +20,9 @@ class Movie(Base):
     __tablename__ = 'movies'
 
     id = Column("id", Integer, primary_key=True, autoincrement=True)
-    name = Column("name", String(length=100), nullable=False, unique=True)
+    name = Column("name", String(length=100), nullable=False)
     age_limit = Column("age_limit", SmallInteger, nullable=False, default=1)
-    rate = Column("rate", SmallInteger, CheckConstraint('rate >= 0 AND rate <=5'), default=None)
+    rate = Column("rate", SmallInteger, default=None)
 
 
     def __repr__(self): 
