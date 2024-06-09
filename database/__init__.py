@@ -4,3 +4,4 @@ from database.models.manager import Manager
 from database.models.customer import Customer
 from database.models.movie import Movie
 from database.models.cinema import Cinema
+from database.models.bank_account import BankAccount

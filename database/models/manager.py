@@ -4,7 +4,6 @@ from sqlalchemy.orm import relationship
 from database.base import Base
 
 
-
 class Manager(Base):
     __tablename__ = 'managers'
 
