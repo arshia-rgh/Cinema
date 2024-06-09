@@ -40,7 +40,7 @@ class UserRepository(BaseRepository):
             self.db.add(item)
             self.db.commit()
             self.db.refresh(item)
-            return user
+            return item
         except Exception as e:
             self.db.rollback()
             # TODO raise appropriate exception, Duplicate Email or username
