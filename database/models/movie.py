@@ -3,18 +3,18 @@ from sqlalchemy import (CheckConstraint, Column, ForeignKey, Integer,
 
 from utils.exceptions import InvalidRateValueError
 
-from .base import Base
+from database.base import Base
 
 
 class Movie(Base):
     """
-    a mapping class for Movie table, subclasses Base class
-    each object represents a row in Movie table
-    Columns:
-        -id
-        -name
-        -age_limit
-        -rate {between 0 and 5}
+        subclasses Base class
+        each object represents a row in Movie table
+        Columns:
+            -id
+            -name
+            -age_limit
+            -rate {between 0 and 5}
     """
 
     __tablename__ = 'movies'

@@ -4,6 +4,7 @@ from sqlalchemy.orm import relationship
 from database.base import Base
 
 
+
 class Manager(Base):
     __tablename__ = 'managers'
 
@@ -11,3 +12,4 @@ class Manager(Base):
     user_id = db.Column(db.ForeignKey('users.id'), unique=True)
 
     user = relationship('User', back_populates='manager')
+    cinema = relationship('Cinema', back_populates='manager')

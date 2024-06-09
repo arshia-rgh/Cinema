@@ -1,9 +1,12 @@
 from sqlalchemy import (CheckConstraint, Column, ForeignKey, Integer,
-                        SmallInteger, String, orm)
+                        SmallInteger, String)
+from sqlalchemy.orm import relationship, validates
 
-from .base import Base
-from .manager import Manager
+from database.base import Base
 from utils.exceptions import InvalidRateValueError
+
+from .manager import Manager
+
 
 class Cinema(Base):
     """
@@ -19,16 +22,17 @@ class Cinema(Base):
     __tablename__ = 'cinemas'
 
     id = Column("id", Integer, primary_key=True, autoincrement=True)
-    manager_id =("manager_id", Integer, ForeignKey("Manager.id"))
+    manager_id =("manager_id", Integer, ForeignKey("managers.id"))
     name = Column("name", String(length=50), nullable=False, unique=True)
     rate = Column("rate", SmallInteger, CheckConstraint('rate >= 0 AND rate <=5'), default=None)
 
+    manager = relationship("Manager", back_populates="cinema")
 
     def __repr__(self): 
         return f"<Cinema(name='{self.name}', manager='{self.manager_id}', rate='{self.rate}'>"
     
 
-    @orm.validates('rate')
+    @validates('rate')
     def validate_rate(self,value):
         if not 0 <= value <=5 :
             raise InvalidRateValueError(f'Invalid rate {value}')

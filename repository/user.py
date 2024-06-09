@@ -60,7 +60,7 @@ class UserRepository(BaseRepository):
                 pass
 
         else:
-            # TODO: raise appropriate exception, Not found user
+            # TODO raise appropriate exception, Not found user
             pass
 
     def delete(self, id: int) -> bool:
