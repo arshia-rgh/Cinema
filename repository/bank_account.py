@@ -7,6 +7,20 @@ from repository.base import BaseRepository
 
 
 class BankAccountRepository(BaseRepository):
+    """
+    A repository for managing BankAccount entities in the database.
+
+    Attributes:
+        db (Session): The database session to use for queries.
+
+    Methods:
+        get_all(): Returns all BankAccount entities from the database.
+        get_by_id(id: int): Returns the BankAccount entity with the given id.
+        get_by_customer_id(customer_id: int): Returns all BankAccount entities associated with the given customer id.
+        create(item: BankAccount): Adds a new BankAccount entity to the database.
+        update(item: BankAccount): Updates an existing BankAccount entity in the database.
+        delete(id: int): Deletes the BankAccount entity with the given id from the database.
+    """
     def __init__(self, db: Session) -> None:
         self.db = db
 
