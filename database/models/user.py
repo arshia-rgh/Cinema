@@ -2,6 +2,7 @@ import sqlalchemy as db
 from sqlalchemy.orm import relationship
 
 from database.base import Base
+from database.models.comment import Comment
 
 
 class User(Base):
@@ -16,3 +17,4 @@ class User(Base):
 
     manager = relationship('Manager', back_populates='user', uselist=False)
     customer = relationship('Customer', back_populates='user', uselist=False)
+    comments: list["Comment"] = relationship('Comment', back_populates='user', uselist=False)
