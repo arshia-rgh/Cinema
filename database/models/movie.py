@@ -3,7 +3,6 @@ from sqlalchemy import (CheckConstraint, Column, ForeignKey, Integer,
 from sqlalchemy.orm import relationship, validates
 
 from database.base import Base
-from database.models.comment import Comment
 from utils.exceptions import InvalidRateValueError
 
 
@@ -25,7 +24,7 @@ class Movie(Base):
     age_limit = Column("age_limit", SmallInteger, nullable=False, default=1)
     rate = Column("rate", SmallInteger, default=None)
 
-    comments: list["Comment"] = relationship("Comment",back_populates="movie")
+    comments = relationship("Comment",back_populates="movie")
 
 
     def __repr__(self): 

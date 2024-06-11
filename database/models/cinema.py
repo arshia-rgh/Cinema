@@ -1,28 +1,28 @@
-from sqlalchemy import (CheckConstraint, Column, ForeignKey, Integer,
-                        SmallInteger, String)
+from sqlalchemy import Column, ForeignKey, Integer, SmallInteger, String
 from sqlalchemy.orm import relationship, validates
 
 from database.base import Base
 from utils.exceptions import InvalidRateValueError
 
-from .manager import Manager
-
 
 class Cinema(Base):
     """
-    subclasses Base class
-    each object represents a row in Cinema table
-    Columns:
-        - id
-        - name
-        - manager_id
-        - rate {between 0 and 5}
+    A Cinema entity representing a cinema in the database.
+    - Attributes:
+        - id (int): The unique identifier of the cinema.
+        - manager_id (int): FK(manager.id) cinema manager. nullable
+        - name (int): name of the cinema.
+        - rate(int): average rate of the cinema which is drieved from cinema_rates table.
+    - Relationships:
+        - movie: the Movie which the comment belongs to
+        - user: the User which the comment belongs to
+        - parent: the parent Comment
     """
 
     __tablename__ = 'cinemas'
 
     id = Column("id", Integer, primary_key=True, autoincrement=True)
-    manager_id =("manager_id", Integer, ForeignKey("managers.id"))
+    manager_id = Column("manager_id", Integer, ForeignKey("managers.id"), default=None, nullable=True)
     name = Column("name", String(length=50), nullable=False)
     rate = Column("rate", SmallInteger, default=None)
 
