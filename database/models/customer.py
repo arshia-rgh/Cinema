@@ -14,3 +14,5 @@ class Customer(Base):
     registration_date = db.Column(db.DateTime, default=db.func.now())
 
     user = relationship('User', back_populates='customer')
+    bank_accounts = relationship('BankAccount', back_populates='customer')
+    subscription = relationship('Subscription', back_populates='customer')
