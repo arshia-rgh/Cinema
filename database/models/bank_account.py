@@ -5,6 +5,20 @@ from database.base import Base
 
 
 class BankAccount(Base):
+    """
+    A BankAccount entity representing a customer's bank account in the database.
+
+    Attributes:
+        id (int): The unique identifier of the bank account.
+        customer_id (int): The unique identifier of the customer who owns the bank account.
+        card_number (str): The card number associated with the bank account.
+        password (str): The password for the bank account.
+        cvv2 (str): The CVV2 security code for the bank account.
+        balance (float): The current balance of the bank account.
+
+    Relationships:
+        customer: The Customer entity that owns the bank account.
+    """
     __tablename__ = 'bank_accounts'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
