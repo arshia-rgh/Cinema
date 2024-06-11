@@ -1,6 +1,8 @@
-from database.base import Base
-from sqlalchemy import (Column,Integer,ForeignKey,Text)
+from sqlalchemy import Column, ForeignKey, Integer, Text
 from sqlalchemy.orm import relationship
+
+from database.base import Base
+
 
 class Comment(Base):
     """
@@ -24,9 +26,9 @@ class Comment(Base):
     __tablename__ = 'comments'
 
     id = Column("id", Integer, primary_key=True, autoincrement=True)
-    movie_id = Column("movie_id", Integer, ForeignKey("movies.id"), ondelete='CASCADE')
-    user_id = Column("user_id", Integer, ForeignKey("users.id"), ondelete='CASCADE')
-    parent_id = Column("name", Integer, ForeignKey('comments.id') ,default=None, ondelete='CASCADE')
+    movie_id = Column("movie_id", Integer, ForeignKey("movies.id", ondelete='CASCADE'))
+    user_id = Column("user_id", Integer, ForeignKey("users.id", ondelete='CASCADE'),)
+    parent_id = Column("parent_id", Integer, ForeignKey('comments.id', ondelete='CASCADE') ,default=None)
     text = Column("text", Text, default=None)
 
     movie = relationship("Movie", back_populates="comments")
@@ -34,6 +36,5 @@ class Comment(Base):
     parent = relationship("Comment", back_populates="comments")
 
     def __repr__(self): 
-        return f"<Comment(User= '{self.user_id}', movie= '{self.movie_id}', parent_comment=
-        '{self.parent_id}', text= '{self.text}'>"
+        return f"<Comment(User= '{self.user_id}', movie= '{self.movie_id}', parent_comment='{self.parent_id}', text= '{self.text}'>"
     
