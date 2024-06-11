@@ -9,6 +9,7 @@ class Customer(Base):
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    wallet = db.Column(db.Float, nullable=False, default=0.0)
     birth_date = db.Column(db.Date)
     registration_date = db.Column(db.DateTime, default=db.func.now())
 
