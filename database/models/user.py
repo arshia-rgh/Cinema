@@ -18,8 +18,6 @@ class User(Base):
         - manager: one-to-one relationship with Manager if user is a manager
         - customer: one-to-one relationship with Customer if user is a customer
         - comments: a list of Comments on movies did by the user
-        - movie_rates: rates given to movies by the user
-        - cinema_rates: rates given to cinemas by the user
     """
     __tablename__ = 'users'
 
@@ -33,4 +31,3 @@ class User(Base):
     manager = relationship('Manager', back_populates='user', uselist=False)
     customer = relationship('Customer', back_populates='user', uselist=False)
     comments = relationship('Comment', back_populates='user',cascade="all, delete")
-
