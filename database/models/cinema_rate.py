@@ -18,7 +18,7 @@ class CinemaRate(Base):
         
     """
     
-    __tablename__ = 'movie_rates'
+    __tablename__ = 'cinema_rates'
 
     id = Column("id", Integer, primary_key=True, autoincrement=True)
     cinema_id = Column("cinema_id", Integer, ForeignKey("cinemas.id", ondelete='CASCADE'))
