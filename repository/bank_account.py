@@ -1,5 +1,6 @@
-from sqlalchemy.orm import Session
 from typing import Type
+
+from sqlalchemy.orm import Session
 
 from database.base import session
 from database.models.bank_account import BankAccount

@@ -6,28 +6,24 @@ from database.base import Base
 
 class Comment(Base):
     """
-    subclasses Base class
-    each object represents a row in comments table
-    Columns:
-        - id (PK)
-        - user_id (FK to User) 
-            - manager and customer both can comment on a movie
-        - movie_id (FK to Movie)
-        - parent_id (FK to Comment) :
-            - Comment.id if its a reply to a comment
-            - None if its directly written for a movie
-        - text type(Text)
-    relationships:
-        - movie (one-to-many)
-        - user (one-to-many)
-        - parent (one-to-many)
+    A Comment entity representing a comment in the database.
+    - Attributes:
+        - id (int): The unique identifier of the comment.
+        - user_id (int): FK(User.id) user of the comment.
+        - movie_id (int): FK(Movie.id) movie of the comment.
+        - parent_id (int): FK(Comment.id) the comment which this comment is repiled to.
+        - text (Text): the text of the comment.
+    - Relationships:
+        - movie: the Movie which the comment belongs to
+        - user: the User which the comment belongs to
+        - parent: the parent Comment
     """
-
+    
     __tablename__ = 'comments'
 
     id = Column("id", Integer, primary_key=True, autoincrement=True)
     movie_id = Column("movie_id", Integer, ForeignKey("movies.id", ondelete='CASCADE'))
-    user_id = Column("user_id", Integer, ForeignKey("users.id", ondelete='CASCADE'),)
+    user_id = Column("user_id", Integer, ForeignKey("users.id", ondelete='CASCADE'))
     parent_id = Column("parent_id", Integer, ForeignKey('comments.id', ondelete='CASCADE') ,default=None)
     text = Column("text", Text, default=None)
 

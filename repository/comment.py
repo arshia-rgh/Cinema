@@ -3,9 +3,7 @@ from typing import Type
 from sqlalchemy.orm import Session
 
 from database.base import session
-from database.models.movie import Movie
 from database.models.comment import Comment
-from database.models.user import User
 from repository.base import BaseRepository
 
 
