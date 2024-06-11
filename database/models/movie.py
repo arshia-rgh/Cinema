@@ -1,5 +1,4 @@
-from sqlalchemy import (CheckConstraint, Column, ForeignKey, Integer,
-                        SmallInteger, String)
+from sqlalchemy import Column, Integer, SmallInteger, String
 from sqlalchemy.orm import relationship, validates
 
 from database.base import Base
@@ -8,13 +7,14 @@ from utils.exceptions import InvalidRateValueError
 
 class Movie(Base):
     """
-        subclasses Base class
-        each object represents a row in Movie table
-        Columns:
-            -id
-            -name
-            -age_limit
-            -rate {between 0 and 5}
+    A Movie entity representing a movie in the database.
+    - Attributes:
+        - id (int): The unique identifier of the movie.
+        - name (str): name of the movie.
+        - age_limit (int): customers above the age limit are allowed to reserve a ticket.
+        - rate(int): average rate o the movie which is drieved from movie_rates table.
+    - Relationships:
+        - comments: a list of comments to the movie
     """
 
     __tablename__ = 'movies'
@@ -24,7 +24,7 @@ class Movie(Base):
     age_limit = Column("age_limit", SmallInteger, nullable=False, default=1)
     rate = Column("rate", SmallInteger, default=None)
 
-    comments = relationship("Comment",back_populates="movie")
+    comments = relationship("Comment",back_populates="movie",cascade="all, delete")
 
 
     def __repr__(self): 
