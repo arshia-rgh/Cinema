@@ -31,8 +31,7 @@ def upgrade() -> None:
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')
     )
-    op.drop_index('name', table_name='cinemas')
-    op.drop_index('name', table_name='movies')
+    
     # ### end Alembic commands ###
 
 
