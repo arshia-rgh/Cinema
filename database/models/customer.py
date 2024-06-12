@@ -18,3 +18,6 @@ class Customer(Base):
     cinema_rates = relationship('CinemaRate', back_populates='customer',cascade="all, delete")
     bank_accounts = relationship('BankAccount', back_populates='customer')
     subscription = relationship('Subscription', back_populates='customer')
+
+    movie_rates = relationship('MovieRate', back_populates='customer',cascade="all, delete")
+    cinema_rates = relationship('CinemaRate', back_populates='customer',cascade="all, delete")

@@ -31,3 +31,4 @@ class User(Base):
     manager = relationship('Manager', back_populates='user', uselist=False)
     customer = relationship('Customer', back_populates='user', uselist=False)
     comments = relationship('Comment', back_populates='user',cascade="all, delete")
+
