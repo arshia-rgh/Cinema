@@ -6,9 +6,9 @@ from database.base import Base
 
 class Customer(Base):
     """
-    A User entity representing a user in the database.
+    A Customer entity representing a customer in the database.
     - Attributes:
-        - id (int): The UNIQUE identifier of the comment.
+        - id (int): The UNIQUE identifier of the customer.
         - user_id (int): Fk(users.id).
         - wallet (float): The balance of the wallet.
         - birth_date (date): The date customer was born.
