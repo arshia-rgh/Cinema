@@ -8,7 +8,7 @@ class User(Base):
     """
     A User entity representing a user in the database.
     - Attributes:
-        - id (int): The UNIQUE identifier of the comment.
+        - id (int): The UNIQUE identifier of the user.
         - username (str): username of the user.
         - password (str): hashed password of the user.
         - email (str): UNIQUE email adderess of the user.
@@ -17,7 +17,7 @@ class User(Base):
     - Relationships:
         - manager: one-to-one relationship with Manager if user is a manager
         - customer: one-to-one relationship with Customer if user is a customer
-        - comments: a list of Comments on movies did by the user
+        - comments: Comments on movies did by the user
     """
     __tablename__ = 'users'
 
@@ -31,3 +31,4 @@ class User(Base):
     manager = relationship('Manager', back_populates='user', uselist=False)
     customer = relationship('Customer', back_populates='user', uselist=False)
     comments = relationship('Comment', back_populates='user',cascade="all, delete")
+
