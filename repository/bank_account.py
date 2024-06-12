@@ -17,6 +17,7 @@ class BankAccountRepository(BaseRepository):
     Methods:
         get_all(): Returns all BankAccount entities from the database.
         get_by_id(id: int): Returns the BankAccount entity with the given id.
+        get_by_card_number(card_number: str): Returns the BankAccount entity with the given card number.
         get_by_customer_id(customer_id: int): Returns all BankAccount entities associated with the given customer id.
         create(item: BankAccount): Adds a new BankAccount entity to the database.
         update(item: BankAccount): Updates an existing BankAccount entity in the database.
@@ -31,6 +32,12 @@ class BankAccountRepository(BaseRepository):
 
     def get_by_id(self, id: int) -> Type[BankAccount] | None:
         bank_account = self.db.query(BankAccount).filter(BankAccount.id == id).first()
+        if bank_account:
+            return bank_account
+        return None
+
+    def get_by_card_number(self, card_number: str) -> Type[BankAccount] | None:
+        bank_account = self.db.query(BankAccount).filter(BankAccount.card_number == card_number).first()
         if bank_account:
             return bank_account
         return None

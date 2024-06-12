@@ -2,6 +2,7 @@ from typing import Type
 
 from sqlalchemy.orm import Session
 
+from database.base import session
 from database import Customer
 from repository.base import BaseRepository
 
@@ -54,3 +55,6 @@ class CustomerRepository(BaseRepository):
             self.db.commit()
             return True
         return False
+
+
+customer_repository = CustomerRepository(session)

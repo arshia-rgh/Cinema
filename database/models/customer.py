@@ -9,7 +9,10 @@ class Customer(Base):
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    wallet = db.Column(db.Float, nullable=False, default=0.0)
     birth_date = db.Column(db.Date)
     registration_date = db.Column(db.DateTime, default=db.func.now())
 
     user = relationship('User', back_populates='customer')
+    bank_accounts = relationship('BankAccount', back_populates='customer')
+    subscription = relationship('Subscription', back_populates='customer')
