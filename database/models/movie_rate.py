@@ -9,12 +9,12 @@ class MovieRate(Base):
     A MovieRate entity representing a rate given to a movie in the database.
     - Attributes:
         - id (int): The unique identifier of the movierate.
-        - user_id (int): FK(User.id) user of the movierate.
+        - customer_id (int): FK(customer.id) customer of the movierate.
         - movie_id (int): FK(Movie.id) movie id of the movieratez.
-        - stars (int): user given stars for the movie.
+        - stars (int): customer given stars for the movie.
     - Relationships:
         - movie: the Movie which the movierate belongs to
-        - user: the User which the movierate belongs to
+        - customer: the customer which the movierate belongs to
         
     """
     
@@ -22,14 +22,14 @@ class MovieRate(Base):
 
     id = Column("id", Integer, primary_key=True, autoincrement=True)
     movie_id = Column("movie_id", Integer, ForeignKey("movies.id", ondelete='CASCADE'))
-    user_id = Column("user_id", Integer, ForeignKey("users.id", ondelete='CASCADE'))
+    customer_id = Column("customer_id", Integer, ForeignKey("customers.id", ondelete='CASCADE'))
     stars = Column("stars", Integer, default=0)
 
     movie = relationship("Movie", back_populates="stars")
-    user = relationship("User", back_populates="movie_rates")
+    customer = relationship("Customer", back_populates="movie_rates")
 
     def __repr__(self): 
-        return f"<MovieRate(id= '{self.id}', User= '{self.user_id}', movie= '{self.movie_id}', stars= '{self.stars}'>"
+        return f"<MovieRate(id= '{self.id}', customer= '{self.customer_id}', movie= '{self.movie_id}', stars= '{self.stars}'>"
     
     @validates('stars')
     def validate_stars(self,value):

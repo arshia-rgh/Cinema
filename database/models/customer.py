@@ -13,3 +13,6 @@ class Customer(Base):
     registration_date = db.Column(db.DateTime, default=db.func.now())
 
     user = relationship('User', back_populates='customer')
+
+    movie_rates = relationship('MovieRate', back_populates='customer',cascade="all, delete")
+    cinema_rates = relationship('CinemaRate', back_populates='customer',cascade="all, delete")

@@ -13,7 +13,7 @@ class MovieRateRepository(BaseRepository):
         -   methods:
             - get_all           ( returns all movie_rates )
             - get_by_id         ( returns a single movie_rate )
-            - get_by_user_id    ( returns a list of all user's movie_rates )
+            - get_by_customer_id    ( returns a list of all customer's movie_rates )
             - get_by_movie_id   ( returns a list of all rates on a movie )
             - create
             - update
@@ -33,8 +33,8 @@ class MovieRateRepository(BaseRepository):
             return movieRate
         return None
 
-    def get_by_user_id(self, id: int) -> list[Type[MovieRate]] | None:
-        movieRates = self.db.query(MovieRate).filter(MovieRate.user_id==id).all()
+    def get_by_customer_id(self, id: int) -> list[Type[MovieRate]] | None:
+        movieRates = self.db.query(MovieRate).filter(MovieRate.customer_id==id).all()
         if movieRates:
             return movieRates
         return None
@@ -53,7 +53,7 @@ class MovieRateRepository(BaseRepository):
             return item
         except Exception as e :
             self.db.rollback()
-            # TODO: handle exceptions for invalid parameters (movie,user id)
+            # TODO: handle exceptions for invalid parameters (movie,customer id)
             pass
 
     def update(self, item: Type[MovieRate]) -> Type[MovieRate]:
@@ -66,7 +66,7 @@ class MovieRateRepository(BaseRepository):
                 return movieRate
             except Exception as e:
                 self.db.rollback()
-                # TODO: handle exceptions for invalid parameters (movie,user id)
+                # TODO: handle exceptions for invalid parameters (movie,customer id)
                 pass
 
         else:
