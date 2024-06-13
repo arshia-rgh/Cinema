@@ -93,3 +93,43 @@ class InvalidRateValueError(CinemaTicketError):
     def __init__(self, value, message):
         self.value = value
         self.message = message 
+
+class CustomerNotFoundError(CinemaTicketError):
+    """
+        raised when customer does not exist.
+    """
+    def __init__(self, value, message):
+        self.value = value
+        self.message = message 
+
+class MovieNotFoundError(CinemaTicketError):
+    """
+        raised when movie does not exist.
+    """
+    def __init__(self, value, message):
+        self.value = value
+        self.message = message 
+
+class CinemaNotFoundError(CinemaTicketError):
+    """
+        raised when cinema does not exist.
+    """
+    def __init__(self, value, message):
+        self.value = value
+        self.message = message 
+
+class alreadyRatedError(CinemaTicketError):
+    """
+        raised when customer has alreaady rated a movie or a cinema.
+    """
+    def __init__(self, value, message):
+        self.value = value
+        self.message = message 
+
+class RateCreationError(CinemaTicketError):
+    """
+        raised when an error happens during creating rate in rate tables.
+    """
+    def __init__(self, value, message):
+        self.value = value
+        self.message = message 
