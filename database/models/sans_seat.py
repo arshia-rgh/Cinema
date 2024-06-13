@@ -7,7 +7,21 @@ from database.base import Base
     ticket class
 '''
 class SansSeat(Base):
-    __tablename__ = 'sanss_seat'
+    """
+    A Sans entity representing a sans in the database.
+    - Attributes:
+        - id (int): The unique identifier of the sans-seat.
+        - seat_number (int): The number of the particular seat.
+        - is_reserved (bool): Shows whether the seat is reserved or not
+        - sans_id (int): FK(sans.id) sans manager.
+        - ticket_id (int): FK(ticket.id) ticket manager. nullable
+
+    - Relationships:
+        - sans: the Sanse which the seat belongs to
+        - ticket: the Ticket which the seat belongs to
+    """
+        
+    __tablename__ = 'sans_seats'
 
     id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
     sans_id = db.Column(db.Integer(), db.ForeignKey('sans.id'), nullable=False)

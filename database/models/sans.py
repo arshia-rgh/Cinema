@@ -6,17 +6,24 @@ from database.base import Base
 # this code is based on this document.
 # https://medium.com/@mandyranero/one-to-many-many-to-many-and-one-to-one-sqlalchemy-relationships-8415927fe8aa
 
-# TODO: the following code should be added to movie class  -> sans = relationship('sans', backref='movie')
-# TODO: the following code should be added to cinema class -> sans = relationship('sans', backref='cinema')
-'''The Sans class has one-to-many relation with:
-    - Movie class
-    - Cinema class
-
-    - Sans_seat class
-'''
-
-
 class Sans(Base):
+    """
+    A Sans entity representing a sans in the database.
+    - Attributes:
+        - id (int): The unique identifier of the sans.
+        - capacity (int): The capacity of the particular sans.
+        - start_date (dateTime): The start date of the sans.
+        - end_date (dateTime): The end date of the sans.
+        - movie_id (int): FK(movie.id) movie manager.
+        - cinema_id (int): FK(cinema.id) cinema manager.
+
+    - Relationships:
+        - movie: the Movie which the sans belongs to
+        - cinema: the Cinema which the sans belongs to
+        - sans-seats: one to one relationship with Sansseat class
+    """
+
+
     __tablename__ = 'sans'
 
     id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
