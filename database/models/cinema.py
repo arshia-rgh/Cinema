@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, Integer, SmallInteger, String
+from sqlalchemy import Column, ForeignKey, Integer, Float, String
 from sqlalchemy.orm import relationship, validates
 
 from database.base import Base
@@ -16,7 +16,7 @@ class Cinema(Base):
     - Relationships:
         - movie: the Movie which the comment belongs to
         - user: the User which the comment belongs to
-        - parent: the parent Comment
+        - stars: the stars given to the cinema
     """
 
     __tablename__ = 'cinemas'
@@ -24,17 +24,18 @@ class Cinema(Base):
     id = Column("id", Integer, primary_key=True, autoincrement=True)
     manager_id = Column("manager_id", Integer, ForeignKey("managers.id"), default=None, nullable=True)
     name = Column("name", String(length=50), nullable=False)
-    rate = Column("rate", SmallInteger, default=None)
+    rate = Column("rate", Float, default=None)
 
     manager = relationship("Manager", back_populates="cinemas")
-
+    stars = relationship("CinemaRate", back_populates='cinema')
+    
     def __repr__(self): 
         return f"<Cinema(name='{self.name}', manager='{self.manager_id}', rate='{self.rate}'>"
     
 
     @validates('rate')
     def validate_rate(self,value):
-        if not 0 <= value <=5 :
+        if not 0.0 <= value <= 5.0 or None :
             raise InvalidRateValueError(f'Invalid rate {value}')
         return value
     

@@ -70,13 +70,13 @@ class CommentRepository(BaseRepository):
             pass
 
     def update(self, item: Type[Comment]) -> Type[Comment]:
-        Comment = self.db.query(Comment).filter(Comment.id == item.id).first()
-        if Comment:
+        comment = self.db.query(Comment).filter(Comment.id == item.id).first()
+        if comment:
             try:
-                Comment = item
+                comment = item
                 self.db.commit()
-                self.db.refresh(Comment)
-                return Comment
+                self.db.refresh(comment)
+                return comment
             except Exception as e:
                 self.db.rollback()
                 # TODO: handle exceptions for invalid parameters (movie,user,parent id)
@@ -87,11 +87,11 @@ class CommentRepository(BaseRepository):
             pass
 
     def delete(self, id: int) -> bool:
-        Comment = self.db.query(Comment).filter(Comment.id == id).first()
-        if Comment:
-            self.db.delete(Comment)
+        comment = self.db.query(Comment).filter(Comment.id == id).first()
+        if comment:
+            self.db.delete(comment)
             self.db.commit()
             return True
         return False
 
-Comment_repository = CommentRepository(session)
+comment_repository = CommentRepository(session)
