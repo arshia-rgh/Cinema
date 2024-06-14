@@ -8,6 +8,7 @@ from utils.cli import clear_terminal
 
 USER = None
 CUSTOMER = None
+IS_LOGIN = False
 
 
 class AuthenticationMenuOption(Enum):
@@ -61,9 +62,14 @@ def login_user_menu():
         print("Passwords do not match.")
     else:
         if auth_service.login_with_email(email, password):
-            global USER, CUSTOMER
-            USER, CUSTOMER = auth_service.get_customer_by_email(email)
+            global USER, CUSTOMER, IS_LOGIN
+            USER, CUSTOMER = auth_service.get_current_user_customer(email)
+            IS_LOGIN = True
             print('Login successful.')
+
+
+def dashboard():
+    pass
 
 
 if __name__ == '__main__':
@@ -78,6 +84,8 @@ if __name__ == '__main__':
         elif selected == AuthenticationMenuOption.LOGIN.value:
             clear_terminal()
             login_user_menu()
+            if IS_LOGIN:
+                dashboard()
         else:
             clear_terminal()
             print('Goodbye 👋')
