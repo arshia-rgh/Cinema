@@ -63,3 +63,15 @@ class UserHasConstraintError(CinemaTicketError):
     """
     raised when user has customer or manager in one to one relationship error
     """
+
+
+class CustomerUpdateError(CinemaTicketError):
+    """
+    raised when customer update is invalid
+    """
+
+
+class CustomerNotFoundError(CinemaTicketError):
+    """
+    raised when customer does not exist
+    """
