@@ -47,5 +47,10 @@ class AuthService:
         customer = self.customer_repository.create(customer)
         return customer
 
+    def get_current_user_customer(self, email: str) -> tuple[User | None, Customer | None]:
+        user = self.user_repository.get_by_email(email)
+        customer = self.customer_repository.get_by_user_id(user.id)
+        return user, customer
+
 
 auth_service = AuthService(user_repository, customer_repository)

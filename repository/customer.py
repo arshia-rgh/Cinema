@@ -23,6 +23,12 @@ class CustomerRepository(BaseRepository):
             return customer
         return None
 
+    def get_by_user_id(self, user_id: int) -> Customer | None:
+        customer = self.db.query(Customer).filter(Customer.user_id == user_id).first()
+        if customer:
+            return customer
+        return None
+
     def create(self, item: Customer) -> Customer:
         try:
             self.db.add(item)

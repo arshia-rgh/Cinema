@@ -6,6 +6,9 @@ from getpass import getpass
 from service.auth import auth_service
 from utils.cli import clear_terminal
 
+USER = None
+CUSTOMER = None
+
 
 class AuthenticationMenuOption(Enum):
     REGISTER = 1
@@ -48,6 +51,21 @@ def create_user_menu():
     print('Registered successfully.')
 
 
+def login_user_menu():
+    email = input("Email:\n")
+    clear_terminal()
+    password = getpass("Password:\n")
+    clear_terminal()
+    confirm_password = getpass("Confirm Password:\n")
+    if password != confirm_password:
+        print("Passwords do not match.")
+    else:
+        if auth_service.login_with_email(email, password):
+            global USER, CUSTOMER
+            USER, CUSTOMER = auth_service.get_customer_by_email(email)
+            print('Login successful.')
+
+
 if __name__ == '__main__':
     while True:
         clear_terminal()
@@ -58,7 +76,8 @@ if __name__ == '__main__':
             create_user_menu()
             continue
         elif selected == AuthenticationMenuOption.LOGIN.value:
-            pass
+            clear_terminal()
+            login_user_menu()
         else:
             clear_terminal()
             print('Goodbye 👋')
