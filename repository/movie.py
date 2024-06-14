@@ -16,6 +16,7 @@ class MovieRepository(BaseRepository):
         - get_top_rated
         - create
         - update
+        - update_rate (movie_id, rate)
         - delete
     """
 
@@ -70,6 +71,14 @@ class MovieRepository(BaseRepository):
             # TODO: raise appropriate exception, Not found movie
             pass
 
+    def update_rate(self, movie_id: int, rate: float) -> bool:
+        movie = self.get_by_id(movie_id)
+        if movie:
+            movie.rate = rate
+            self.update(movie)
+            return True
+        return False
+    
     def delete(self, id: int) -> bool:
         movie = self.db.query(Movie).filter(Movie.id == id).first()
         if movie:
