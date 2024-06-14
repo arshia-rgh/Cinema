@@ -2,7 +2,9 @@
 
 class CinemaTicketError(Exception):
     """Base class for exceptions in this module."""
-    pass
+
+    def __init__(self, message):
+        self.message = message
 
 
 class LongUserNameError(CinemaTicketError):
@@ -13,59 +15,31 @@ class LongUserNameError(CinemaTicketError):
         message -- explanation of the error
     """
 
-    def __init__(self, value, message):
-        self.value = value
-        self.message = message
-
 
 class InvalidUserNameError(CinemaTicketError):
     """raised when username is invalid(lowercase, uppercase letters and numbers)"""
-
-    def __init__(self, value, message):
-        self.value = value
-        self.message = message
 
 
 class DuplicatedEmailError(CinemaTicketError):
     """raised when email is not unique"""
 
-    def __init__(self, value, message):
-        self.value = value
-        self.message = message
-
 
 class InvalidEmailError(CinemaTicketError):
     """raised when email's formal is not correct"""
-
-    def __init__(self, value, message):
-        self.value = value
-        self.message = message
 
 
 class InvalidPhoneError(CinemaTicketError):
     """raised when user's phone number is not valid"""
 
-    def __init__(self, value, message):
-        self.value = value
-        self.message = message
-
 
 class ShortPasswordError(CinemaTicketError):
     """raised when password is less than 8 characters"""
-
-    def __init__(self, value, message):
-        self.value = value
-        self.message = message
 
 
 class WeakPasswordError(CinemaTicketError):
     """raised when user's password doesn't have at least 2 characters
         of [$, #, &, @]
     """
-
-    def __init__(self, value, message):
-        self.value = value
-        self.message = message
 
 
 class InvalidPasswordError(CinemaTicketError):
@@ -74,22 +48,18 @@ class InvalidPasswordError(CinemaTicketError):
         numbers and [$, #, &, @]
     """
 
-    def __init__(self, value, message):
-        self.value = value
-        self.message = message
-
 
 class LowAccountBalanceError(CinemaTicketError):
     """raised when user's bank account's balance is low"""
 
-    def __init__(self, value, message):
-        self.value = value
-        self.message = message
 
 class InvalidRateValueError(CinemaTicketError):
     """
         raised when rate value is not between 0 and 5
     """
-    def __init__(self, value, message):
-        self.value = value
-        self.message = message 
+
+
+class UserHasConstraintError(CinemaTicketError):
+    """
+    raised when user has customer or manager in one to one relationship error
+    """
