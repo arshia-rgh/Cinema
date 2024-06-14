@@ -18,19 +18,18 @@ class Comment(Base):
         - user: the User which the comment belongs to
         - parent: the parent Comment
     """
-    
+
     __tablename__ = 'comments'
 
     id = Column("id", Integer, primary_key=True, autoincrement=True)
     movie_id = Column("movie_id", Integer, ForeignKey("movies.id", ondelete='CASCADE'))
     user_id = Column("user_id", Integer, ForeignKey("users.id", ondelete='CASCADE'))
-    parent_id = Column("parent_id", Integer, ForeignKey('comments.id', ondelete='CASCADE') ,default=None)
+    parent_id = Column("parent_id", Integer, ForeignKey('comments.id', ondelete='CASCADE'), default=None)
     text = Column("text", Text, default=None)
 
     movie = relationship("Movie", back_populates="comments")
     user = relationship("User", back_populates="comments")
-    parent = relationship("Comment", back_populates="comments")
+    parent = relationship("Comment", backref="children", remote_side=[id])
 
-    def __repr__(self): 
+    def __repr__(self):
         return f"<Comment(User= '{self.user_id}', movie= '{self.movie_id}', parent_comment='{self.parent_id}', text= '{self.text}'>"
-    

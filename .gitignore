@@ -31,3 +31,6 @@ venv.bak/
 # PyCharm
 .idea/
 
+# log files
+cinema.log
+transaction.log
