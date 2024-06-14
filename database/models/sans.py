@@ -31,7 +31,7 @@ class Sans(Base):
     capacity = db.Column(db.Integer())
     start_date = db.Column(db.DateTime(timezone=True), nullable=True, default=None)
     end_date = db.Column(db.DateTime(timezone=True), nullable=True, default=None)
-    movie_id = db.Column(db.Integer(), db.ForeignKey('movies.id'), nullable=False, unique=True)
+    movie_id = db.Column(db.Integer(), db.ForeignKey('movies.id'), nullable=False)
     cinema_id = db.Column(db.Integer(), db.ForeignKey('cinemas.id'), nullable=False)
 
     sans_seat = relationship('SansSeat', backref='sans')
