@@ -1,4 +1,3 @@
-
 import sqlalchemy as db
 from sqlalchemy.orm import relationship
 
@@ -23,7 +22,7 @@ class Ticket(Base):
     __tablename__ = 'tickets'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    seat_id = db.Column(db.Integer, db.ForeignKey('sans_seats.id'), nullable=False)
+    seat_id = db.Column(db.Integer, db.ForeignKey('sans_seats.id'), nullable=False, unique=True)
     sans_id = db.Column(db.Integer, db.ForeignKey('sans.id'), nullable=False)
     movie_id = db.Column(db.Integer, db.ForeignKey('movies.id'), nullable=False)
     price = db.Column(db.Float, nullable=False)

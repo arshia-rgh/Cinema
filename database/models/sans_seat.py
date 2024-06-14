@@ -1,11 +1,13 @@
 import sqlalchemy as db
-from sqlalchemy.orm import relationship, backref
+from sqlalchemy.orm import relationship
 
 from database.base import Base
 
 '''SansSeat has one to one relation with
     ticket class
 '''
+
+
 class SansSeat(Base):
     """
     A Sans entity representing a sans in the database.
@@ -17,10 +19,10 @@ class SansSeat(Base):
         - ticket_id (int): FK(ticket.id) ticket manager. nullable
 
     - Relationships:
-        - sans: the Sanse which the seat belongs to
+        - sans: the Sans which the seat belongs to
         - ticket: the Ticket which the seat belongs to
     """
-        
+
     __tablename__ = 'sans_seats'
 
     id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
@@ -30,4 +32,4 @@ class SansSeat(Base):
     ticket_id = db.Column(db.Integer(), db.ForeignKey('tickets.id'))
 
     sans = relationship('Sans')
-    ticket = relationship('Ticket', back_populates='seat')
+    ticket = relationship('Ticket', back_populates='seat', uselist=False)
