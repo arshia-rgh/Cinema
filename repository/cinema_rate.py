@@ -1,5 +1,6 @@
 from typing import Type
 
+from sqlalchemy import func
 from sqlalchemy.orm import Session
 
 from database.base import session
@@ -44,7 +45,18 @@ class CinemaRateRepository(BaseRepository):
         if cinemaRates:
             return cinemaRates
         return None
-           
+    
+    
+    def check_if_has_rated(self, customer_id: int, cinema_id:int) -> type[CinemaRate] | None :
+        cinema_rate = self.db.query(CinemaRate).filter(CinemaRate.customer_id == customer_id and CinemaRate.cinema_id== cinema_id).first()
+        if cinema_rate:
+            return cinema_rate
+        return None
+
+    def get_avg_rate(self, id: int) -> float :
+        avg = self.db.query(func.avg(CinemaRate.stars)).filter(CinemaRate.id == id)
+        return avg
+    
     def create(self, item: CinemaRate) -> CinemaRate:
         try:
             self.db.add(item)
