@@ -36,5 +36,5 @@ class Sans(Base):
 
     sans_seat = relationship('SansSeat', backref='sans')
     movie = relationship('Movie', back_populates='sanses')
-    cinema = relationship('Cinema')
+    cinema = relationship('Cinema', back_populates='sanses')
     ticket = relationship('Ticket', back_populates='sans')
