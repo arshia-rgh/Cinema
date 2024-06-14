@@ -24,14 +24,17 @@ class Sans(Base):
     """
 
 
-    __tablename__ = 'sans'
+    __tablename__ = 'sanses'
 
     id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
 
     capacity = db.Column(db.Integer())
     start_date = db.Column(db.DateTime(timezone=True), nullable=True, default=None)
     end_date = db.Column(db.DateTime(timezone=True), nullable=True, default=None)
-
     movie_id = db.Column(db.Integer(), db.ForeignKey('movies.id'), nullable=False)
     cinema_id = db.Column(db.Integer(), db.ForeignKey('cinemas.id'), nullable=False)
-    sans_seat = relationship('sans_seats', backref='sans')
+
+    sans_seat = relationship('SansSeat', backref='sans')
+    movie = relationship('Movie')
+    cinema = relationship('Cinema')
+

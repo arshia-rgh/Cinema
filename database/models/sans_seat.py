@@ -28,3 +28,6 @@ class SansSeat(Base):
     seat_number = db.Column(db.Integer())
     is_reserved = db.Column(db.Boolean, default=False)
     ticket_id = db.Column(db.Integer(), db.ForeignKey('tickets.id'))
+
+    sans = relationship('Sans')
+    ticket = relationship('Ticket')
