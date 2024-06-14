@@ -1,5 +1,4 @@
 from database import Cinema, CinemaRate, Movie, MovieRate
-
 from repository.cinema import CinemaRepository, cinema_repository
 from repository.cinema_rate import CinemaRateRepository, cinema_rate_repository
 
