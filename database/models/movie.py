@@ -25,8 +25,11 @@ class Movie(Base):
     age_limit = Column("age_limit", SmallInteger, nullable=False, default=1)
     rate = Column("rate", Float, default=None)
 
-    comments = relationship("Comment", back_populates="movie", cascade="all, delete")
+
+    comments = relationship("Comment",back_populates="movie",cascade="all, delete")
     stars = relationship("MovieRate", back_populates='movie')
+    sans = relationship('sans', backref='movies')
+
 
     def __repr__(self):
         return f"<Movie(name='{self.name}', age_limit='{self.age_limit}', rate='{self.rate}'>"
