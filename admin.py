@@ -4,12 +4,8 @@ from datetime import datetime
 
 from utils.cli import clear_terminal
 from repository.sans import Sans, sans_repository
-from repository.movie import movie_repository
-from repository.cinema import cinema_repository
-
-# should be created by script
-# generate sanses
-# generate cinemas informations
+from repository.movie import Movie, movie_repository
+from repository.cinema import Cinema, cinema_repository
 
 
 class AdminMenuOption(Enum):
@@ -85,18 +81,14 @@ def handle_sans_menu(selected):
         sans_repository.delete(id)
     
     elif selected == DetailMenuOption.UPDATE.value:
-        # 1 -> show list of all movies
         movies = movie_repository.get_all()
         for movie in movies:
             print(movie.id, movie.name)
-
         movie_id = input("Movie ID: ")
 
-        # 2 -> show list of all cinemas
         cinemas = cinema_repository.get_all()
         for cinema in cinemas:
             print(cinema.id, cinema.name)
-
         cinema_id = input("Cinema ID: ")
 
         start_date = input("Start Date: (example format: 1998-06-05): ")
@@ -114,11 +106,70 @@ def handle_sans_menu(selected):
 
 
 def handle_cinema_menu(selected):
-    pass
+    clear_terminal()
+    if selected == DetailMenuOption.SHOW_ALL.value:
+        cinemas = cinema_repository.get_all()
+        for cinema in cinemas:
+            print(f'{cinema.id}\t{cinema.name}\t{cinema.stars}\t{cinema.rate}')
+    elif selected == DetailMenuOption.BACK:
+        return
+    elif selected == DetailMenuOption.CREATE.value:
+        manager_id = int(input("Manger ID: "))
+        name = input("Name: ")
+        rate = float(input("Rate: "))
+        cinema = Cinema(name=name, rate=rate, manager_id=manager_id)
+        cinema_repository.create(cinema)
+
+    elif selected == DetailMenuOption.DELETE.value:
+        id = int(input("Enter The ID of Cinema: "))
+        cinema_repository.delete(id)
+
+    elif selected == DetailMenuOption.UPDATE.value:
+        id = int(input("Enter The ID of Ciname: "))
+        cinema = cinema_repository.get_by_id(id)
+        manager_id = int(input("Manger ID: "))
+        name = input("Name: ")
+        rate = float(input("Rate: "))
+
+        cinema.name = name
+        cinema.rate = rate
+        cinema.manager_id = manager_id
+
+        cinema_repository.update(cinema)
 
 
 def handle_movie_menu(selected):
-    pass
+    clear_terminal()
+    if selected == DetailMenuOption.SHOW_ALL.value:
+        movies = movie_repository.get_all()
+        for movie in movies:
+            print(f'{movie.id}\t{movie.name}\t{movie.rate}')
+
+    elif selected == DetailMenuOption.CREATE.value:
+
+        name = input("Name: ")
+        rate = float(input("Rate: "))
+        age_limit = int(input("Age Limit: "))
+        movie = Movie(name=name, rate=rate, age_limit=age_limit)
+        movie_repository.create()
+
+    elif selected == DetailMenuOption.DELETE.value:
+        id = int(input("Enter The ID of Movie: "))
+        movie_repository.delete(id)
+
+    elif selected == DetailMenuOption.UPDATE.value:
+        id = int(input("Enter The ID of Movie: "))
+        movie = movie_repository.get_by_id(id)
+
+        name = input("Name: ")
+        rate = float(input("Rate: "))
+        age_limit = int(input("Age Limit: "))
+
+        movie.name = name
+        movie.rate = rate
+        movie.age_limit = age_limit
+
+        movie_repository.update(movie)
 
 
 def admin_menu():
