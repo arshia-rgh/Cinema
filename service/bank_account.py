@@ -1,11 +1,7 @@
-import logging
-
+from database import BankAccount
 from repository.bank_account import BankAccountRepository, bank_account_repository
 from repository.customer import CustomerRepository, customer_repository
-from database import BankAccount
-
-logging.basicConfig(filename='transaction.log', level=logging.INFO, format='%(asctime)s %(message)s')
-logger = logging.getLogger(__name__)
+from utils.logger import transaction_logger
 
 
 class BankService:  # TODO: Add exception handling
@@ -78,7 +74,9 @@ class BankService:  # TODO: Add exception handling
         self.bank_account_repository.update(bank_account)
         self.customer_repository.update(customer)
 
-        logger.info(f'Deposited {amount} to wallet of customer {customer.id} from bank account {bank_account.id}')
+        transaction_logger.info(
+            f'Deposited {amount} to wallet of customer {customer.id} from bank account {bank_account.id}'
+        )
 
         return True
 
@@ -104,7 +102,8 @@ class BankService:  # TODO: Add exception handling
         bank_account.balance += amount
         customer.wallet -= amount
 
-        logger.info(f'Withdrew {amount} from wallet of customer {customer.id} to bank account {bank_account.id}')
+        transaction_logger.info(
+            f'Withdrew {amount} from wallet of customer {customer.id} to bank account {bank_account.id}')
 
         return True
 
@@ -132,7 +131,7 @@ class BankService:  # TODO: Add exception handling
         sender.balance -= amount
         receiver.balance += amount
 
-        logger.info(f'Transferred {amount} from bank account {sender.id} to bank account {receiver.id}')
+        transaction_logger.info(f'Transferred {amount} from bank account {sender.id} to bank account {receiver.id}')
 
         return True
 

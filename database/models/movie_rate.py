@@ -1,8 +1,9 @@
 from sqlalchemy import Column, ForeignKey, Integer
-from sqlalchemy.orm import relationship,validates
+from sqlalchemy.orm import relationship, validates
 
 from database.base import Base
 from utils.exceptions import InvalidRateValueError
+
 
 class MovieRate(Base):
     """
@@ -17,7 +18,7 @@ class MovieRate(Base):
         - customer: the customer which the movierate belongs to
         
     """
-    
+
     __tablename__ = 'movie_rates'
 
     id = Column("id", Integer, primary_key=True, autoincrement=True)
@@ -28,12 +29,12 @@ class MovieRate(Base):
     movie = relationship("Movie", back_populates="stars")
     customer = relationship("Customer", back_populates="movie_rates")
 
-    def __repr__(self): 
+    def __repr__(self):
         return f"<MovieRate(id= '{self.id}', customer= '{self.customer_id}', movie= '{self.movie_id}', stars= '{self.stars}'>"
-    
+
     @validates('stars')
-    def validate_stars(self,value):
-        valid_stars= [0,1,2,3,4,5]
+    def validate_stars(self, value):
+        valid_stars = [0, 1, 2, 3, 4, 5]
         if value not in valid_stars:
             raise InvalidRateValueError(f'Invalid stars {value}')
         return value
