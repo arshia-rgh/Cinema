@@ -27,6 +27,8 @@ class Movie(Base):
 
     comments = relationship("Comment",back_populates="movie",cascade="all, delete")
     stars = relationship("CinemaRate", back_populates='movie')
+    sans = relationship('sans', backref='movies')
+
 
     def __repr__(self): 
         return f"<Movie(name='{self.name}', age_limit='{self.age_limit}', rate='{self.rate}'>"
