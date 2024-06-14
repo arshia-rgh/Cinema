@@ -28,7 +28,8 @@ class Movie(Base):
 
     comments = relationship("Comment",back_populates="movie",cascade="all, delete")
     stars = relationship("MovieRate", back_populates='movie')
-    sans = relationship('sans', backref='movies')
+    sanses = relationship('Sans', back_populates='movie')
+    tickets = relationship('Ticket', back_populates='movie')
 
 
     def __repr__(self):

@@ -28,14 +28,13 @@ class Cinema(Base):
 
     manager = relationship("Manager", back_populates="cinemas")
     stars = relationship("CinemaRate", back_populates='cinema')
-    
-    def __repr__(self): 
+    sanses = relationship('Sans', back_populates='cinema')
+
+    def __repr__(self):
         return f"<Cinema(name='{self.name}', manager='{self.manager_id}', rate='{self.rate}'>"
-    
 
     @validates('rate')
-    def validate_rate(self,value):
-        if not 0.0 <= value <= 5.0 or None :
+    def validate_rate(self, value):
+        if not 0.0 <= value <= 5.0 or None:
             raise InvalidRateValueError(f'Invalid rate {value}')
         return value
-    

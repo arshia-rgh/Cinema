@@ -3,6 +3,7 @@ from sqlalchemy.orm import relationship
 
 from database.base import Base
 
+
 # this code is based on this document.
 # https://medium.com/@mandyranero/one-to-many-many-to-many-and-one-to-one-sqlalchemy-relationships-8415927fe8aa
 
@@ -23,7 +24,6 @@ class Sans(Base):
         - sans-seats: one to one relationship with Sansseat class
     """
 
-
     __tablename__ = 'sans'
 
     id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
@@ -31,7 +31,10 @@ class Sans(Base):
     capacity = db.Column(db.Integer())
     start_date = db.Column(db.DateTime(timezone=True), nullable=True, default=None)
     end_date = db.Column(db.DateTime(timezone=True), nullable=True, default=None)
-
     movie_id = db.Column(db.Integer(), db.ForeignKey('movies.id'), nullable=False)
     cinema_id = db.Column(db.Integer(), db.ForeignKey('cinemas.id'), nullable=False)
-    sans_seat = relationship('sans_seats', backref='sans')
+
+    sans_seat = relationship('SansSeat', backref='sans')
+    movie = relationship('Movie', back_populates='sanses')
+    cinema = relationship('Cinema', back_populates='sanses')
+    ticket = relationship('Ticket', back_populates='sans')
