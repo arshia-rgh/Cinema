@@ -1,10 +1,13 @@
 from typing import Type
 
 from sqlalchemy.orm import Session
+from sqlalchemy import func
 
 from database.base import session
 from database.models.movie_rate import MovieRate
 from repository.base import BaseRepository
+
+from utils.exceptions import RateCreationError
 
 
 class MovieRateRepository(BaseRepository):
@@ -15,6 +18,7 @@ class MovieRateRepository(BaseRepository):
             - get_by_id         ( returns a single movie_rate )
             - get_by_customer_id    ( returns a list of all customer's movie_rates )
             - get_by_movie_id   ( returns a list of all rates on a movie )
+            - check_if_has_rated (returns True if the customer has rated the movie)
             - create
             - update
             - delete
@@ -44,7 +48,17 @@ class MovieRateRepository(BaseRepository):
         if movieRates:
             return movieRates
         return None
-           
+    
+    def check_if_has_rated(self, customer_id: int, movie_id:int) -> type[MovieRate] | None :
+        movie_rate = self.db.query(MovieRate).filter(MovieRate.customer_id == customer_id and MovieRate.movie_id== movie_id).first()
+        if movie_rate:
+            return movie_rate
+        return None
+
+    def get_avg_rate(self, movie_id: int) -> float :
+        avg = self.db.query(func.avg(MovieRate.stars)).filter(MovieRate.movie_id == movie_id)
+        return avg
+
     def create(self, item: MovieRate) -> MovieRate:
         try:
             self.db.add(item)
@@ -53,8 +67,8 @@ class MovieRateRepository(BaseRepository):
             return item
         except Exception as e :
             self.db.rollback()
-            # TODO: handle exceptions for invalid parameters (movie,customer id)
-            pass
+            raise RateCreationError
+            
 
     def update(self, item: Type[MovieRate]) -> Type[MovieRate]:
         movieRate = self.db.query(MovieRate).filter(MovieRate.id == item.id).first()
