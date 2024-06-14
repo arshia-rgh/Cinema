@@ -30,4 +30,4 @@ class SansSeat(Base):
     ticket_id = db.Column(db.Integer(), db.ForeignKey('tickets.id'))
 
     sans = relationship('Sans')
-    ticket = relationship('Ticket')
+    ticket = relationship('Ticket', back_populates='seat')

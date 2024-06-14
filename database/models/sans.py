@@ -24,7 +24,7 @@ class Sans(Base):
     """
 
 
-    __tablename__ = 'sanses'
+    __tablename__ = 'sans'
 
     id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
 
@@ -37,4 +37,5 @@ class Sans(Base):
     sans_seat = relationship('SansSeat', backref='sans')
     movie = relationship('Movie')
     cinema = relationship('Cinema')
+    ticket = relationship('Ticket', back_populates='sans')
 
